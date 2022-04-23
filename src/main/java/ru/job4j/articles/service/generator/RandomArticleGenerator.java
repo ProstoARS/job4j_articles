@@ -6,16 +6,18 @@ import ru.job4j.articles.model.Word;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RandomArticleGenerator implements ArticleGenerator {
     @Override
     public Article generate(List<Word> words) {
-        var wordsCopy = new ArrayList<>(words);
+        List<Word> wordsCopy = new ArrayList<>(words);
         Collections.shuffle(wordsCopy);
-        var content = wordsCopy.stream()
-                .map(Word::getValue)
-                .collect(Collectors.joining(" "));
+        StringBuilder sb = new StringBuilder();
+        for (Word word : wordsCopy) {
+            sb.append(word.getValue());
+            sb.append(" ");
+        }
+        String content = sb.toString();
         return new Article(content);
     }
 }
